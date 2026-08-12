@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<!-- ============================= -->
+<!-- NAVIGATION -->
+<!-- ============================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        🎓 Complaint Prioritizer
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/submit">
+            Submit Complaint
+        </a>
+
+        <a href="/admin">
+            Admin Dashboard
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ============================= -->
+<!-- MAIN DASHBOARD -->
+<!-- ============================= -->
+
+<main class="dashboard">
+
+
+    <!-- ============================= -->
+    <!-- HEADER -->
+    <!-- ============================= -->
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <span class="dashboard-badge">
+                🛠️ Administration
+            </span>
+
+            <h1>
+                Complaint Dashboard
+            </h1>
+
+            <p>
+                Monitor and prioritize student complaints.
+            </p>
+
+        </div>
+
+
+        <a href="/submit"
+           class="dashboard-button">
+
+            + New Complaint
+
+        </a>
+
+    </div>
+
+
+
+    <!-- ============================= -->
+    <!-- STATISTICS -->
+    <!-- ============================= -->
+
+    <div class="stats-grid">
+
+
+        <!-- TOTAL -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📋
+            </div>
+
+            <div class="stat-content">
+
+                <div class="stat-title">
+                    Total Complaints
+                </div>
+
+                <div class="stat-value">
+                    {{ total_complaints }}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CRITICAL -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon critical-icon">
+                🔴
+            </div>
+
+            <div class="stat-content">
+
+                <div class="stat-title">
+                    Critical
+                </div>
+
+                <div class="stat-value">
+                    {{ critical_count }}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- HIGH -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon high-icon">
+                🟠
+            </div>
+
+            <div class="stat-content">
+
+                <div class="stat-title">
+                    High Priority
+                </div>
+
+                <div class="stat-value">
+                    {{ high_count }}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MEDIUM -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon medium-icon">
+                🟡
+            </div>
+
+            <div class="stat-content">
+
+                <div class="stat-title">
+                    Medium Priority
+                </div>
+
+                <div class="stat-value">
+                    {{ medium_count }}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOW -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon low-icon">
+                🟢
+            </div>
+
+            <div class="stat-content">
+
+                <div class="stat-title">
+                    Low Priority
+                </div>
+
+                <div class="stat-value">
+                    {{ low_count }}
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+        <!-- ============================= -->
+    <!-- STATUS SUMMARY -->
+    <!-- ============================= -->
+
+    <div class="status-summary">
+
+    <div class="status-item">
+        <span class="status-dot pending-dot"></span>
+        <span>Pending: {{ pending_count }}</span>
+    </div>
+
+    <div class="status-item">
+        <span class="status-dot progress-dot"></span>
+        <span>In Progress: {{ progress_count }}</span>
+    </div>
+
+    <div class="status-item">
+        <span class="status-dot resolved-dot"></span>
+        <span>Resolved: {{ resolved_count }}</span>
+    </div>
+
+</div>
+
+
+
+    <!-- ============================= -->
+    <!-- COMPLAINT TABLE CONTAINER -->
+    <!-- ============================= -->
+
+    <div class="table-container">
+
+
+        <!-- TABLE HEADER -->
+
+        <div class="table-header">
+
+            <div>
+
+                <h2>
+                    All Complaints
+                </h2>
+
+                <p>
+                    Complaints are automatically sorted by priority score.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ============================= -->
+        <!-- SEARCH AND FILTERS -->
+        <!-- ============================= -->
+
+        <div class="filter-container">
+
+
+            <!-- SEARCH -->
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="🔎 Search complaints..."
+            >
+
+
+            <!-- PRIORITY -->
+
+            <select id="priorityFilter">
+
+                <option value="all">
+                    All Priorities
+                </option>
+
+                <option value="Critical">
+                    🔴 Critical
+                </option>
+
+                <option value="High">
+                    🟠 High
+                </option>
+
+                <option value="Medium">
+                    🟡 Medium
+                </option>
+
+                <option value="Low">
+                    🟢 Low
+                </option>
+
+            </select>
+
+
+            <!-- STATUS -->
+
+            <select id="statusFilter">
+
+                <option value="all">
+                    All Status
+                </option>
+
+                <option value="Pending">
+                    Pending
+                </option>
+
+                <option value="In Progress">
+                    In Progress
+                </option>
+
+                <option value="Resolved">
+                    Resolved
+                </option>
+
+            </select>
+
+
+        </div>
+
+
+
+        <!-- ============================= -->
+        <!-- COMPLAINTS -->
+        <!-- ============================= -->
+
+        {% if complaints %}
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Student</th>
+
+                        <th>Department</th>
+
+                        <th>Category</th>
+
+                        <th>Description</th>
+
+                        <th>Score</th>
+
+                        <th>Priority</th>
+
+                        <th>Status</th>
+
+                        <th>Date</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for complaint in complaints %}
+
+                    <tr
+                        class="complaint-row"
+                        data-priority="{{ complaint.priority }}"
+                        data-status="{{ complaint.status }}"
+                    >
+                            <!-- ID -->
+
+                        <td>
+                            #{{ complaint.id }}
+                        </td>
+
+
+                        <!-- STUDENT -->
+
+                        <td>
+
+                            <strong>
+                                {{ complaint.student_name }}
+                            </strong>
+
+                        </td>
+
+
+                        <!-- DEPARTMENT -->
+
+                        <td>
+                            {{ complaint.department }}
+                        </td>
+
+
+                        <!-- CATEGORY -->
+
+                        <td>
+                            {{ complaint.category }}
+                        </td>
+
+
+                        <!-- DESCRIPTION -->
+
+                        <td class="description-cell">
+
+                            {{ complaint.description }}
+
+                        </td>
+
+
+                        <!-- SCORE -->
+
+                        <td>
+
+                            <span class="score">
+                                {{ complaint.score }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- PRIORITY -->
+
+                        <td>
+
+                            {% if complaint.priority == "Critical" %}
+
+                                <span class="priority-badge critical-badge">
+                                    🔴 Critical
+                                </span>
+
+                            {% elif complaint.priority == "High" %}
+
+                                <span class="priority-badge high-badge">
+                                    🟠 High
+                                </span>
+
+                            {% elif complaint.priority == "Medium" %}
+
+                                <span class="priority-badge medium-badge">
+                                    🟡 Medium
+                                </span>
+
+                            {% else %}
+
+                                <span class="priority-badge low-badge">
+                                    🟢 Low
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- STATUS -->
+
+                        <td>
+
+                            <form
+                                action="/update_status/{{ complaint.id }}"
+                                method="POST"
+                                class="status-form"
+                            >
+
+                                <select
+                                    name="status"
+                                    class="status-select"
+                                    onchange="this.form.submit()"
+                                >
+
+                                    <option
+                                        value="Pending"
+                                        {% if complaint.status == "Pending" %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        Pending
+                                    </option>
+
+
+                                    <option
+                                        value="In Progress"
+                                        {% if complaint.status == "In Progress" %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        In Progress
+                                    </option>
+
+
+                                    <option
+                                        value="Resolved"
+                                        {% if complaint.status == "Resolved" %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        Resolved
+                                    </option>
+
+                                </select>
+
+                            </form>
+
+                        </td>
+
+
+                        <!-- DATE -->
+
+                        <td>
+
+                            <small>
+                                {{ complaint.created_at }}
+                            </small>
+
+                        </td>
+
+
+                        <!-- ACTION -->
+
+                        <td class="action-buttons">
+
+    <a href="/complaint/{{ complaint['id'] }}" class="view-btn">
+        View
+    </a>
+
+    <form action="/delete/{{ complaint['id'] }}" method="POST"
+          onsubmit="return confirm('Are you sure you want to delete this complaint?');"
+          style="display: inline;">
+
+        <button type="submit" class="delete-btn">
+            Delete
+        </button>
+
+    </form>
+
+</td>
+
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        {% else %}
+                <!-- ============================= -->
+            <!-- EMPTY STATE -->
+            <!-- ============================= -->
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    📭
+                </div>
+
+                <h3>
+                    No complaints yet
+                </h3>
+
+                <p>
+                    Student complaints will appear here.
+                </p>
+
+                <a
+                    href="/submit"
+                    class="dashboard-button"
+                >
+                    Submit First Complaint
+                </a>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- ============================= -->
+<!-- FOOTER -->
+<!-- ============================= -->
+
+<footer>
+
+    <p>
+        © 2026 College Complaint Prioritizer
+    </p>
+
+    <p>
+        Python • Flask • SQLite
+    </p>
+
+</footer>
+
+
+
+<!-- ============================= -->
+<!-- JAVASCRIPT -->
+<!-- ============================= -->
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+
+</body>
+
+</html>

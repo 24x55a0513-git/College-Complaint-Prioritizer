@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Complaint Details</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🎓 Complaint Prioritizer
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="/submit">
+                Submit Complaint
+            </a>
+
+            <a href="/admin">
+                Admin Dashboard
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Complaint Details -->
+
+    <main class="complaint-details-page">
+
+
+        <div class="details-card">
+
+
+            <div class="details-header">
+
+                <div>
+
+                    <span class="dashboard-badge">
+                        📋 Complaint #{{ complaint.id }}
+                    </span>
+
+                    <h1>
+                        Complaint Details
+                    </h1>
+
+                    <p>
+                        Complete information about this complaint.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Student Information -->
+
+            <div class="details-section">
+
+                <h2>
+                    Student Information
+                </h2>
+
+                <div class="details-grid">
+
+                    <div class="detail-item">
+
+                        <span>
+                            Student
+                        </span>
+
+                        <strong>
+                            {{ complaint.student_name }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span>
+                            Department
+                        </span>
+
+                        <strong>
+                            {{ complaint.department }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Complaint Information -->
+
+            <div class="details-section">
+
+                <h2>
+                    Complaint Information
+                </h2>
+
+                <div class="details-grid">
+
+                    <div class="detail-item">
+
+                        <span>
+                            Category
+                        </span>
+
+                        <strong>
+                            {{ complaint.category }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span>
+                            Date
+                        </span>
+
+                        <strong>
+                            {{ complaint.created_at }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="description-box">
+
+                    <span>
+                        Description
+                    </span>
+
+                    <p>
+                        {{ complaint.description }}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Priority Information -->
+
+            <div class="details-section">
+
+                <h2>
+                    Priority Analysis
+                </h2>
+
+                <div class="details-grid">
+
+
+                    <div class="detail-item">
+
+                        <span>
+                            Priority Score
+                        </span>
+
+                        <strong class="detail-score">
+                            {{ complaint.score }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span>
+                            Priority Level
+                        </span>
+
+                        <strong>
+                            {{ complaint.priority }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span>
+                            Current Status
+                        </span>
+
+                        <strong>
+                            {{ complaint.status }}
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- Buttons -->
+
+            <div class="details-actions">
+
+                <a
+                    href="/admin"
+                    class="back-button"
+                >
+                    ← Back to Dashboard
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            © 2026 College Complaint Prioritizer
+        </p>
+
+        <p>
+            Python • Flask • SQLite
+        </p>
+
+    </footer>
+
+
+</body>
+
+</html>

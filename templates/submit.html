@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Submit Complaint</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+
+        <div class="logo">
+            🎓 Complaint Prioritizer
+        </div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/submit">Submit Complaint</a>
+            <a href="/admin">Admin Dashboard</a>
+        </div>
+
+    </nav>
+
+
+    <!-- Complaint Section -->
+    <section class="complaint-section">
+
+        <div class="form-container">
+
+            <div class="form-header">
+
+                <span class="form-badge">
+                    📝 Student Complaint
+                </span>
+
+                <h1>Submit a Complaint</h1>
+
+                <p>
+                    Provide the details below. Our system will
+                    automatically calculate the complaint priority.
+                </p>
+
+            </div>
+
+
+            <!-- Complaint Form -->
+
+            <form action="/submit" method="POST">
+
+
+                <!-- Student Name -->
+
+                <div class="form-group">
+
+                    <label for="student_name">
+                        Student Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="student_name"
+                        name="student_name"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Department -->
+
+                <div class="form-group">
+
+                    <label for="department">
+                        Department
+                    </label>
+
+                    <select id="department" name="department" required>
+
+    <option value="">Select Department</option>
+
+    <option value="CSE">Computer Science & Engineering</option>
+    <option value="IT">Information Technology</option>
+    <option value="AI & DS">Artificial Intelligence & Data Science</option>
+    <option value="ECE">Electronics & Communication Engineering</option>
+    <option value="EEE">Electrical & Electronics Engineering</option>
+    <option value="Mechanical">Mechanical Engineering</option>
+    <option value="Civil">Civil Engineering</option>
+    <option value="MBA">Management / MBA</option>
+    <option value="Administration">Administration</option>
+    <option value="Other">Other</option>
+
+</select>
+
+                </div>
+
+
+                <!-- Category -->
+
+                <div class="form-group">
+
+                    <label for="category">
+                        Complaint Category
+                    </label>
+
+                    <select id="category" name="category" required>
+
+    <option value="">Select Complaint Category</option>
+
+    <option value="Safety">Safety & Security</option>
+
+    <option value="Infrastructure">Infrastructure</option>
+
+    <option value="Electrical">Electrical</option>
+
+    <option value="Plumbing">Plumbing & Water</option>
+
+    <option value="Academic">Academic</option>
+
+    <option value="Examination">Examination</option>
+
+    <option value="IT/Network">IT & Network</option>
+
+    <option value="Library">Library</option>
+
+    <option value="Hostel">Hostel</option>
+
+    <option value="Transport">Transport</option>
+
+    <option value="Cleanliness">Cleanliness</option>
+
+    <option value="Canteen">Canteen & Food</option>
+
+    <option value="Other">Other</option>
+
+</select>
+
+                </div>
+
+
+                <!-- Description -->
+
+                <div class="form-group">
+
+                    <label for="description">
+                        Complaint Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        name="description"
+                        rows="5"
+                        placeholder="Describe the problem clearly..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+
+
+                <!-- Students Affected -->
+
+                <div class="form-group">
+
+                    <label for="affected_students">
+                        Number of Students Affected
+                    </label>
+
+                    <input
+                        type="number"
+                        id="affected_students"
+                        name="affected_students"
+                        min="1"
+                        placeholder="Example: 50"
+                        required
+                    >
+
+                    <small>
+                        Approximately how many students are affected
+                        by this problem?
+                    </small>
+
+                </div>
+
+
+                <!-- Submit -->
+
+                <button
+                    type="submit"
+                    class="submit-button"
+                >
+                    Submit Complaint 🚀
+                </button>
+
+
+            </form>
+
+
+            <!-- Back -->
+
+            <div class="back-link">
+
+                <a href="/">
+                    ← Back to Home
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+
+        <p>
+            © 2026 College Complaint Prioritizer
+        </p>
+
+        <p>
+            Python • Flask • SQLite
+        </p>
+
+    </footer>
+
+</body>
+</html>
