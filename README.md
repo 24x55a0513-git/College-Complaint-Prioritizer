@@ -95,7 +95,7 @@ http://127.0.0.1:5000
 
 ![Home Page](screenshots/ccp_1.jpeg)
 
-### Admin Dashboard
+### How it works
 
 ![Admin Dashboard](screenshots/ccp_2.jpeg)
 
